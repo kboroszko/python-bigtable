@@ -18,6 +18,8 @@ on:
     branches:
     - main
   pull_request:
+    branches:
+      - main
 name: Conformance
 jobs:
   conformance:
