@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "proto_schema": {
+      "columns": [
+        {
+          "name": "column1",
+          "type": {
+            "int64_type": {
+              "encoding": {
+                "big_endian_bytes": {
+                  "bytes_type": {
+                    "encoding": {
+                      "raw": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }, {
+          "name": "column2",
+          "type": {
+            "timestamp_type": {}
+          }
+        }, {
+          "name": "column3",
+          "type": {
+            "struct_type": {
+              "fields": [
+                {
+                  "field_name": "field1",
+                  "type": {
+                    "bool_type": {}
+                  }
+                }, {
+                  "field_name": "field2",
+                  "type": {
+                    "date_type": {}
+                  }
+                }
+              ]
+            }
+          }
+        }, {
+          "name": "column4",
+          "type": {
+            "map_type": {
+              "key_type": {
+                "string_type": {}
+              },
+              "value_type": {
+                "string_type": {}
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

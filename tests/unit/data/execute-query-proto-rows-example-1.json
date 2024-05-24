@@ -1,0 +1,59 @@
+{
+  "values": [
+    {
+      "type": null,
+      "raw_value": "deadbeef"
+    },
+    {
+      "type": null,
+      "raw_timestamp_micros": 12345
+    },
+    {
+      "type": null,
+      "bytes_value": "deadbeef"
+    },
+    {
+      "type": null,
+      "string_value": "deadbeef"
+    },
+    {
+      "type": null,
+      "int_value": 123
+    },
+    {
+      "type": null,
+      "bool_value": true
+    },
+    {
+      "type": null,
+      "float_value": 12.31e-3
+    },
+    {
+      "type": null,
+      "date_value": {
+        "year": 1021,
+        "month": 11,
+        "day": 0
+      }
+    },
+    {
+      "type": null,
+      "timestamp_value": "2020-05-01T23:31:12Z"
+    },
+    {
+      "type": null,
+      "array_value": {
+        "values": [
+          {
+            "type": null,
+            "int_value": 123
+          },
+          {
+            "type": null,
+            "int_value": 412
+          }
+        ]
+      }
+    }
+  ]
+}

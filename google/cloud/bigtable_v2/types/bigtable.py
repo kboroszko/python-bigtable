@@ -49,6 +49,8 @@ __protobuf__ = proto.module(
         "GenerateInitialChangeStreamPartitionsResponse",
         "ReadChangeStreamRequest",
         "ReadChangeStreamResponse",
+        "ExecuteQueryRequest",
+        "ExecuteQueryResponse",
     },
 )
 
@@ -1185,6 +1187,142 @@ class ReadChangeStreamResponse(proto.Message):
         number=3,
         oneof="stream_record",
         message=CloseStream,
+    )
+
+
+class ExecuteQueryRequest(proto.Message):
+    class QueryParameter(proto.Message):
+        value: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+
+    class ProtoFormat(proto.Message):
+        pass
+
+    class ArrowFormat(proto.Message):
+        pass
+
+    instance_name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+    app_profile_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+    query_string: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+    proto_format: ProtoFormat = proto.Field(
+        ProtoFormat,
+        number=4,
+        oneof="data_format",
+    )
+
+    arrow_format: ArrowFormat = proto.Field(
+        ArrowFormat,
+        number=5,
+        oneof="data_format",
+    )
+
+    params: MutableMapping[str, data.ProtoRows.Value] = proto.MapField(
+        proto.STRING,
+        data.ProtoRows.Value,
+        number=7,
+    )
+
+    resumption_token: bytes = proto.Field(
+        proto.BYTES,
+        number=8,
+    )
+
+
+class ExecuteQueryResponse(proto.Message):
+    class ProtoSchema(proto.Message):
+        class ColumnMetadata(proto.Message):
+            name: string = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+
+            type: data.Type = proto.Field(
+                data.Type,
+                number=2,
+            )
+
+        columns: MutableSequence[ColumnMetadata] = proto.RepeatedField(
+            ColumnMetadata,
+            number=1,
+        )
+
+    class ArrowSchema(proto.Message):
+        schema: bytes = proto.Field(proto.BYTES, number=1)
+
+    class ResultSetMetadata(proto.Message):
+        proto_schema: ProtoSchema = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            message="ExecuteQueryResponse.ProtoSchema",
+            oneof="schema",
+        )
+        arrow_schema: ArrowSchema = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message="ExecuteQueryResponse.ArrowSchema",
+            oneof="schema",
+        )
+
+    class PartialResultSet(proto.Message):
+        arrow_record_batch: ArrowRecordBatch = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message="ExecuteQueryResponse.ArrowRecordBatch",
+            oneof="partial_rows",
+        )
+
+        proto_bytes: ProtoRowsBytes = proto.Field(
+            proto.MESSAGE,
+            number=5,
+            message="ExecuteQueryResponse.ProtoRowsBytes",
+            oneof="partial_rows",
+        )
+
+        resumption_token: bytes = proto.Field(
+            proto.BYTES,
+            number=3,
+        )
+
+        estimated_batch_size: int = proto.Field(
+            proto.INT32,
+            number=4,
+        )
+
+    class ArrowRecordBatch(proto.Message):
+        serialized_record_batch: bytes = proto.Field(
+            proto.BYTES,
+            number=1,
+        )
+
+    class ProtoRowsBytes(proto.Message):
+        proto_rows_bytes: bytes = proto.Field(
+            proto.BYTES,
+            number=1,
+        )
+
+    metadata: ResultSetMetadata = proto.Field(
+        ResultSetMetadata,
+        number=1,
+        oneof="response",
+    )
+    results: PartialResultSet = proto.Field(
+        PartialResultSet,
+        number=2,
+        oneof="response",
     )
 
 

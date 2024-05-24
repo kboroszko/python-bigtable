@@ -18,6 +18,8 @@ from __future__ import annotations
 from typing import MutableMapping, MutableSequence
 
 import proto  # type: ignore
+from google.protobuf import timestamp_pb2
+from google.type import date_pb2
 
 
 __protobuf__ = proto.module(
@@ -38,6 +40,8 @@ __protobuf__ = proto.module(
         "StreamPartition",
         "StreamContinuationTokens",
         "StreamContinuationToken",
+        "Type",
+        "ProtoRows",
     },
 )
 
@@ -1095,6 +1099,192 @@ class StreamContinuationToken(proto.Message):
     token: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+
+
+class Type(proto.Message):
+    class Bytes(proto.Message):
+        class Encoding(proto.Message):
+            class Raw(proto.Message):
+                pass
+
+            raw: Raw = proto.Field(Raw, number=1, oneof="encoding")
+
+        encoding: Encoding = proto.Field(
+            Encoding,
+            number=1,
+        )
+
+    class Int64(proto.Message):
+        class Encoding(proto.Message):
+            class BigEndianBytes(proto.Message):
+                bytes_type: Type.Bytes = proto.Field(
+                    proto.MESSAGE,
+                    number=1,
+                    message="Type.Bytes",
+                )
+
+            big_endian_bytes: BigEndianBytes = proto.Field(
+                BigEndianBytes,
+                number=1,
+                oneof="encoding",
+            )
+
+        encoding: Encoding = proto.Field(Encoding, number=1)
+
+    class String(proto.Message):
+        pass
+
+    class Bool(proto.Message):
+        pass
+
+    class Float64(proto.Message):
+        pass
+
+    class Timestamp(proto.Message):
+        pass
+
+    class Date(proto.Message):
+        pass
+
+    class Struct(proto.Message):
+        class Field(proto.Message):
+            field_name: string = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+            type: Type = proto.Field(proto.MESSAGE, number=2, message="Type")
+
+        fields: MutableSequence[Field] = proto.RepeatedField(Field, number=1)
+
+    class Array(proto.Message):
+        element_type: Type = proto.Field(proto.MESSAGE, number=1, message="Type")
+
+    class Map(proto.Message):
+        key_type: Type = proto.Field(proto.MESSAGE, number=1, message="Type")
+        value_type: Type = proto.Field(proto.MESSAGE, number=2, message="Type")
+
+    bytes_type: Bytes = proto.Field(
+        Bytes,
+        number=1,
+        oneof="kind",
+    )
+    string_type: String = proto.Field(
+        String,
+        number=2,
+        oneof="kind",
+    )
+    int64_type: Int64 = proto.Field(
+        Int64,
+        number=5,
+        oneof="kind",
+    )
+    float64_type: Float64 = proto.Field(
+        Float64,
+        number=9,
+        oneof="kind",
+    )
+    bool_type: Bool = proto.Field(
+        Bool,
+        number=8,
+        oneof="kind",
+    )
+    timestamp_type: Timestamp = proto.Field(
+        Timestamp,
+        number=10,
+        oneof="kind",
+    )
+    date_type: Date = proto.Field(
+        Date,
+        number=11,
+        oneof="kind",
+    )
+    struct_type: Struct = proto.Field(
+        Struct,
+        number=7,
+        oneof="kind",
+    )
+    array_type: Array = proto.Field(
+        Array,
+        number=3,
+        oneof="kind",
+    )
+    map_type: Map = proto.Field(
+        Map,
+        number=4,
+        oneof="kind",
+    )
+
+
+class ProtoRows(proto.Message):
+    class ArrayValue(proto.Message):
+        values: MutableSequence[Value] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message="ProtoRows.Value",
+        )
+
+    class Value(proto.Message):
+        type: Type = proto.Field(
+            Type,
+            number=7,
+        )
+
+        raw_value: bytes = proto.Field(
+            proto.BYTES,
+            number=8,
+            oneof="kind",
+        )
+        raw_timestamp_micros: int64 = proto.Field(
+            proto.INT64,
+            number=9,
+            oneof="kind",
+        )
+        bytes_value: bytes = proto.Field(
+            proto.BYTES,
+            number=2,
+            oneof="kind",
+        )
+        string_value: string = proto.Field(
+            proto.STRING,
+            number=3,
+            oneof="kind",
+        )
+        int_value: int64 = proto.Field(
+            proto.INT64,
+            number=6,
+            oneof="kind",
+        )
+        bool_value: bool = proto.Field(
+            proto.BOOL,
+            number=10,
+            oneof="kind",
+        )
+        float_value: float = proto.Field(
+            proto.DOUBLE,
+            number=11,
+            oneof="kind",
+        )
+        timestamp_value: Timestamp = proto.Field(
+            timestamp_pb2.Timestamp,
+            number=12,
+            oneof="kind",
+        )
+        date_value: Date = proto.Field(
+            date_pb2.Date,
+            number=13,
+            oneof="kind",
+        )
+        array_value: ArrayValue = proto.Field(
+            proto.MESSAGE,
+            number=4,
+            message="ProtoRows.ArrayValue",
+            oneof="kind",
+        )
+
+    values: MutableSequence[Value] = proto.RepeatedField(
+        Value,
+        number=1,
     )
 
 
