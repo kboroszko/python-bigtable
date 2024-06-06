@@ -40,6 +40,8 @@ from .types.bigtable import ReadRowsRequest
 from .types.bigtable import ReadRowsResponse
 from .types.bigtable import SampleRowKeysRequest
 from .types.bigtable import SampleRowKeysResponse
+from .types.bigtable import ExecuteQueryRequest
+from .types.bigtable import ExecuteQueryResponse
 from .types.data import Cell
 from .types.data import Column
 from .types.data import ColumnRange
@@ -100,6 +102,8 @@ __all__ = (
     "RowSet",
     "SampleRowKeysRequest",
     "SampleRowKeysResponse",
+    "ExecuteQueryRequest",
+    "ExecuteQueryResponse",
     "StreamContinuationToken",
     "StreamContinuationTokens",
     "StreamPartition",
