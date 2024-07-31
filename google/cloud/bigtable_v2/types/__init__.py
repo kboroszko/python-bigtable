@@ -33,6 +33,8 @@ from .bigtable import (
     ReadRowsResponse,
     SampleRowKeysRequest,
     SampleRowKeysResponse,
+    ExecuteQueryRequest,
+    ExecuteQueryResponse,
 )
 from .data import (
     Cell,
@@ -50,6 +52,8 @@ from .data import (
     StreamPartition,
     TimestampRange,
     ValueRange,
+    Type,
+    ProtoRows,
 )
 from .feature_flags import (
     FeatureFlags,
@@ -84,6 +88,8 @@ __all__ = (
     "ReadRowsResponse",
     "SampleRowKeysRequest",
     "SampleRowKeysResponse",
+    "ExecuteQueryRequest",
+    "ExecuteQueryResponse",
     "Cell",
     "Column",
     "ColumnRange",
@@ -99,6 +105,8 @@ __all__ = (
     "StreamPartition",
     "TimestampRange",
     "ValueRange",
+    "Type",
+    "ProtoRows",
     "FeatureFlags",
     "FullReadStatsView",
     "ReadIterationStats",

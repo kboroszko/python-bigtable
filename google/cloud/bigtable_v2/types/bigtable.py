@@ -1236,7 +1236,7 @@ class ExecuteQueryRequest(proto.Message):
         number=7,
     )
 
-    resumption_token: bytes = proto.Field(
+    resume_token: bytes = proto.Field(
         proto.BYTES,
         number=8,
     )
@@ -1285,16 +1285,16 @@ class ExecuteQueryResponse(proto.Message):
             oneof="partial_rows",
         )
 
-        proto_bytes: ProtoRowsBytes = proto.Field(
+        proto_rows_batch: ProtoRowsBatch = proto.Field(
             proto.MESSAGE,
-            number=5,
-            message="ExecuteQueryResponse.ProtoRowsBytes",
+            number=3,
+            message="ExecuteQueryResponse.ProtoRowsBatch",
             oneof="partial_rows",
         )
 
-        resumption_token: bytes = proto.Field(
+        resume_token: bytes = proto.Field(
             proto.BYTES,
-            number=3,
+            number=5,
         )
 
         estimated_batch_size: int = proto.Field(
@@ -1308,8 +1308,8 @@ class ExecuteQueryResponse(proto.Message):
             number=1,
         )
 
-    class ProtoRowsBytes(proto.Message):
-        proto_rows_bytes: bytes = proto.Field(
+    class ProtoRowsBatch(proto.Message):
+        batch_data: bytes = proto.Field(
             proto.BYTES,
             number=1,
         )

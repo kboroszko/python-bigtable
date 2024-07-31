@@ -1284,7 +1284,7 @@ class ProtoRows(proto.Message):
 
     values: MutableSequence[Value] = proto.RepeatedField(
         Value,
-        number=1,
+        number=2,
     )
 
 

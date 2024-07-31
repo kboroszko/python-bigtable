@@ -514,6 +514,45 @@ class BigtableGrpcAsyncIOTransport(BigtableTransport):
             )
         return self._stubs["read_change_stream"]
 
+    @property
+    def execute_query(
+        self,
+    ) -> Callable[
+        [bigtable.ExecuteQueryRequest], Awaitable[bigtable.ExecuteQueryResponse]
+    ]:
+        r"""Returns a stream of :class:`google.cloud.bigtable_v2.types.ExecuteQueryResponse`.
+
+        First response contains metadata describing types and names of columns in the result.
+        Following responses contain chunks of data that should be gathered until ``resume_token``
+        or end-of-stream is reached. Each chunk contains an unspecified number or fraction of parsable
+        entities that should be concatenated together. When ``resume_token`` or end-of-stream is
+        reached bytes can be parsed to obtain one or more instances of parsable entities. Exact type
+        of parsable entities depends on whether ``proto_format`` or ``arrow_format`` field in the
+        request is set. ``proto_format`` requests produce
+        :class:`google.cloud.bigtable_v2.types.ExecuteQueryResponse.ProtoRowsBatch`,
+        ``arrow_format`` produce
+        :class:`google.cloud.bigtable_v2.types.ExecuteQueryResponse.ArrowRecordBatch`.
+
+        See the ExecuteQuery documentation for details.
+
+        Returns:
+            Callable[[~.ExecuteQueryRequest],
+                    Awaitable[~.ExecuteQueryResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "execute_query" not in self._stubs:
+            self._stubs["execute_query"] = self.grpc_channel.unary_stream(
+                "/google.bigtable.v2.Bigtable/ExecuteQuery",
+                request_serializer=bigtable.ExecuteQueryRequest.serialize,
+                response_deserializer=bigtable.ExecuteQueryResponse.deserialize,
+            )
+        return self._stubs["execute_query"]
+
     def _prep_wrapped_messages(self, client_info):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
@@ -569,6 +608,11 @@ class BigtableGrpcAsyncIOTransport(BigtableTransport):
             ),
             self.read_change_stream: gapic_v1.method_async.wrap_method(
                 self.read_change_stream,
+                default_timeout=43200.0,
+                client_info=client_info,
+            ),
+            self.execute_query: gapic_v1.method_async.wrap_method(
+                self.execute_query,
                 default_timeout=43200.0,
                 client_info=client_info,
             ),

@@ -1,7 +1,7 @@
 {
   "results": {
-    "proto_bytes": {
-      "proto_rows_bytes": "deadbeef"
+    "proto_rows_batch": {
+      "batch_data": "deadbeef"
     }
   }
 }
